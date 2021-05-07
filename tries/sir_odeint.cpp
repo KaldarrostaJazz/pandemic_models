@@ -1,9 +1,6 @@
 #include <boost/array.hpp>
 #include <boost/numeric/odeint.hpp>
-
-double const b = 0.1;
-double const g = 0.05;
-int const N = 100;
+#include <iostream>
 
 typedef boost::array<double, 3> state;
 
@@ -18,6 +15,10 @@ void print_sir(state const& x, double const t) {
 }
 
 int main() {
-  state x = {99., 1., 0.};  // intial conditions
-  boost::numeric::odeint::integrate(sir, x, 0.0, 200.0, 0.1, print_sir);
+  double const d, b, g;
+  int const N;
+  double S, I, R;
+  std::cin >> N >> b >> g >> S >> I >> R >> d;
+  state x = {S, I, R};  // intial conditions
+  boost::numeric::odeint::integrate(sir, x, 0.0, d, 0.1, print_sir);
 }
