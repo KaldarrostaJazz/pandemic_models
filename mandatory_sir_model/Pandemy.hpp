@@ -1,7 +1,7 @@
 #ifndef PROGRESSION_HPP
 #define PROGRESSION_HPP
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 
 #include "State.hpp"
@@ -19,7 +19,8 @@ class Pandemy {
       throw std::runtime_error("S, I and R must be positive integer values!");
     } else if (people != state.S + state.I + state.R) {
       throw std::runtime_error("It must be N = S + I + R");
-    } else if (virus.beta < 0. || virus.beta > 1. || virus.gamma < 0. || virus.gamma > 1.) {
+    } else if (virus.beta < 0. || virus.beta > 1. || virus.gamma < 0. ||
+               virus.gamma > 1.) {
       throw std::runtime_error("Beta and gamma must be in the range [0. ; 1.]");
     }
   }

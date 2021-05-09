@@ -1,3 +1,4 @@
+#include <cmath>
 #include <fstream>
 #include <iostream>
 
@@ -10,10 +11,12 @@ void print(std::vector<State> const& result) {
   output_file.open("prog.dat");
   for (auto& state : result) {
     std::cout << "*--------------------------------------------------*" << '\n';
-    std::cout << "S = " << state.S << " I = " << state.I << " R = " << state.R
+    std::cout << "Day = " << day << "S = " << round(state.S) << " I = " <<
+round(state.I) << " R = " << round(state.R)
               << '\n';
-    output_file << "Day = " << day << "S = " << state.S << " I = " << state.I
-                << " R = " << state.R << '\n';
+    output_file << "Day = " << day << "S = " << round(state.S) << " I = " <<
+round(state.I)
+                << " R = " << round(state.R) << '\n';
     ++day;
   }
   output_file.close();
@@ -25,9 +28,10 @@ void print_simple(std::vector<State> const& result) {
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
-    std::cout << i << " " << state.S << " " << state.I << " " << state.R
-              << '\n';
-    output_file << i << " " << state.S << " " << state.I << " " << state.R << '\n';
+    std::cout << i << " " << round(state.S) << " " << round(state.I) << " "
+              << round(state.R) << '\n';
+    output_file << i << " " << round(state.S) << " " << round(state.I) << " "
+                << round(state.R) << '\n';
     ++i;
   }
   output_file.close();
