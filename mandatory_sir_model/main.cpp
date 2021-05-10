@@ -1,15 +1,17 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <cassert>
 
 #include "Pandemy.hpp"
 
 /*********************************************************************************
-void print(std::vector<State> const& result) {
+void print(int N, std::vector<State> const& result) {
   int day = 1;
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
+    assert(N == round(state.S) +  round(state.I) + round(state.R));
     std::cout << "*--------------------------------------------------*" << '\n';
     std::cout << "Day = " << day << "S = " << round(state.S) << " I = " <<
 round(state.I) << " R = " << round(state.R)
@@ -23,11 +25,12 @@ round(state.I)
 }
 *********************************************************************************/
 
-void print_simple(std::vector<State> const& result) {
+void print_simple(int N, std::vector<State> const& result) {
   int i = 1;
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
+    assert(N == round(state.S) +  round(state.I) + round(state.R));
     std::cout << i << " " << round(state.S) << " " << round(state.I) << " "
               << round(state.R) << '\n';
     output_file << i << " " << round(state.S) << " " << round(state.I) << " "
@@ -59,6 +62,6 @@ int main() {
   std::cin >> D;
   Pandemy pandemy{N, s, virus};
   auto const& states = pandemy.progression(D);
-  // print(states);
-  print_simple(states);
+  // print(N, states);
+  print_simple(N, states);
 }
