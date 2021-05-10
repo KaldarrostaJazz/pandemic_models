@@ -1,17 +1,15 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
-#include <cassert>
 
 #include "Pandemy.hpp"
 
 /*********************************************************************************
-void print(int N, std::vector<State> const& result) {
+void print(std::vector<State> const& result) {
   int day = 1;
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
-    assert(N == round(state.S) +  round(state.I) + round(state.R));
     std::cout << "*--------------------------------------------------*" << '\n';
     std::cout << "Day = " << day << "S = " << round(state.S) << " I = " <<
 round(state.I) << " R = " << round(state.R)
@@ -25,14 +23,13 @@ round(state.I)
 }
 *********************************************************************************/
 
-void print_simple(int N, std::vector<State> const& result) {
+void print_simple(std::vector<State> const& result) {
   int i = 1;
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
-    assert(N == round(state.S) +  round(state.I) + round(state.R));
     std::cout << i << " " << round(state.S) << " " << round(state.I) << " "
-              << round(state.R) << '\n';
+              << round(state.R) << " " << round(state.S) + round(state.I) + round(state.R) << '\n';
     output_file << i << " " << round(state.S) << " " << round(state.I) << " "
                 << round(state.R) << '\n';
     ++i;
@@ -57,11 +54,11 @@ int main() {
   std::cin >> s.I;
   std::cout << "R = ";
   std::cin >> s.R;
-  double D;
+  int D;
   std::cout << "Enter duration: ";
   std::cin >> D;
   Pandemy pandemy{N, s, virus};
   auto const& states = pandemy.progression(D);
-  // print(N, states);
-  print_simple(N, states);
+  // print(states);
+  print_simple(states);
 }
