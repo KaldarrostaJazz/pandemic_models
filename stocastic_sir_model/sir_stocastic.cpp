@@ -3,20 +3,20 @@
 #include <iostream>
 #include <random>
 int main() {
-  double const beta = 0.7;
+  double const beta = 0.05;
   double const gamma = 0.1;
-  double const f = 2 * d * v * 1000 / (l * l);
-  double const dt = 1 / f;
-  double const time = 120;
+  //double const f = 2 * d * v * 1000 / (l * l);
+  double const dt = 0.001;
+  double const time = 10;
   double const b = beta * dt;
   double const g = gamma * dt;
-  int const n = 1000;
+  //int const n = 100;
   int const num = time / dt;
   boost::array<double, num> s;
   boost::array<double, num> k;
   boost::array<double, num> r;
-  k[0] = 1;
-  s[0] = 999;
+  k[0] = 5;
+  s[0] = 95;
   r[0] = 0;
   std::random_device rd;
   std::mt19937 mt(rd());
@@ -40,8 +40,8 @@ int main() {
   std::ofstream output_file;
   output_file.open("dati.dat");
   for (int q = 0; q != num; ++q) {
-    std::cout << q / f << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
-    output_file << q / f << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
+    std::cout << q * dt << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
+    output_file << q * dt << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
   }
   output_file.close();
 }
