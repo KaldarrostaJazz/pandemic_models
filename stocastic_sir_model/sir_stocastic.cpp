@@ -1,4 +1,5 @@
 #include <boost/array.hpp>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -38,7 +39,7 @@ int main() {
     }
   }
   std::ofstream output_file;
-  output_file.open("dati.dat");
+  output_file.open("prog.dat");
   for (int q = 0; q != num; ++q) {
     std::cout << q * dt << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
     output_file << q * dt << " " << s[q] << " " << k[q] << " " << r[q] << '\n';
