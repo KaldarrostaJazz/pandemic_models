@@ -20,7 +20,7 @@ int main() {
   s[0] = 95;
   r[0] = 0;
   std::random_device rd;
-  std::mt19937 mt(rd());
+  std::default_random_engine mt(rd());
   std::uniform_real_distribution<> v(0.0, 1.0);
   for (int i = 1; i < num; ++i) {
     double c = v(mt);
