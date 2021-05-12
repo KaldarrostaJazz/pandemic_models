@@ -14,7 +14,7 @@ std::vector<State> Pandemy::progression(int const D) const {
     s.I = last.I + round((beta / people) * last.S * last.I) -
           round(gamma * last.I);
     s.R = last.R + round(gamma * last.I);
-    assert(s.S + s.R + s.I = people);
+    assert(people = s.S + s.R + s.I);
     result.push_back(s);
   }
   return result;
