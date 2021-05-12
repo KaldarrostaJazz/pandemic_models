@@ -20,15 +20,15 @@ state.I
 }
 
 void print_simple(std::vector<State> const& result) {
-  int i = 1;
+  int day = 1;
   std::ofstream output_file;
   output_file.open("prog.dat");
   for (auto& state : result) {
-    std::cout << i << " " << state.S << " " << state.I << " " << state.R << " "
+    std::cout << day << " " << state.S << " " << state.I << " " << state.R << " "
               << state.S + state.I + state.R << '\n';
-    output_file << i << " " << state.S << " " << state.I << " " << state.R
+    output_file << day << " " << state.S << " " << state.I << " " << state.R
                 << '\n';
-    ++i;
+    ++day;
   }
   output_file.close();
 }
