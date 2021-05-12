@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 
 #include "Pandemy.hpp"
@@ -26,7 +25,7 @@ int main() {
   std::cout << "Enter duration: ";
   std::cin >> D;
   Pandemy pandemy{N, s, virus};
-  auto const& states = pandemy.progression(D);
+  auto const states = pandemy.progression(D);
   // print(states);
   print_simple(states);
 }

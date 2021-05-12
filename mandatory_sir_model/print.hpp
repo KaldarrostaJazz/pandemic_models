@@ -1,5 +1,6 @@
 #ifndef PRINT_HPP
 #define PRINT_HPP
+#include <fstream>
 
 void print(std::vector<State> const& result) {
   int day = 1;

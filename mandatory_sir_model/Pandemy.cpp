@@ -3,10 +3,10 @@
 #include <cassert>
 #include <cmath>
 
-std::vector<State> Pandemy::progression(int const& D) const {
+std::vector<State> Pandemy::progression(int const D) const {
   std::vector<State> result{state};
-  double const& beta = virus.beta;
-  double const& gamma = virus.gamma;
+  double const beta = virus.beta;
+  double const gamma = virus.gamma;
   for (int i = 1; i != D; ++i) {
     auto const& last = result.back();
     State s{};
