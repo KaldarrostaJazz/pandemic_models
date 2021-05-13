@@ -23,6 +23,6 @@ class Pandemy {
       throw std::range_error("Beta and gamma must be in the range [0. ; 1.]");
     }
   }
-  std::vector<State> progression(int const D) const;
+  std::vector<State> progression(int D) const;
 };
 #endif

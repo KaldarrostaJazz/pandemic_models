@@ -4,8 +4,7 @@
 
 void print(std::vector<State> const& result) {
   int day = 1;
-  std::ofstream output_file;
-  output_file.open("prog.dat");
+  std::ofstream output_file("prog.dat");
   for (auto& state : result) {
     std::cout << "*--------------------------------------------------*" << '\n';
     std::cout << "Day = " << day << "S = " << state.S << " I = " <<
@@ -21,8 +20,7 @@ state.I
 
 void print_simple(std::vector<State> const& result) {
   int day = 1;
-  std::ofstream output_file;
-  output_file.open("prog.dat");
+  std::ofstream output_file("prog.dat");
   for (auto& state : result) {
     std::cout << day << " " << state.S << " " << state.I << " " << state.R << " "
               << state.S + state.I + state.R << '\n';

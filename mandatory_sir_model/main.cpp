@@ -24,6 +24,7 @@ int main() {
   int D;
   std::cout << "Enter duration: ";
   std::cin >> D;
+  std::cout << '\n';
   Pandemy pandemy{N, s, virus};
   auto const states = pandemy.progression(D);
   // print(states);
