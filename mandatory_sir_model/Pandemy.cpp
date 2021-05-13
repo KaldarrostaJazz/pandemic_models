@@ -9,10 +9,11 @@ std::vector<State> Pandemy::progression(int D) const {
   for (int day = 1; day != D; ++day) {
     auto const last = result.back();
     State s{};
-    s.S = last.S - last((beta / people) * last.S * last.I);
+    s.S = last.S - round((beta / people) * last.S * last.I);
     s.I = last.I + round((beta / people) * last.S * last.I) -
           round(gamma * last.I);
     s.R = last.R + round(gamma * last.I);
+    assert(people == s.S + s.R + s.I);
     result.push_back(s);
   }
   return result;
