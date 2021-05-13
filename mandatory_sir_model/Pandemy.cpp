@@ -4,15 +4,15 @@
 #include <fstream>
 std::vector<State> Pandemy::progression(int D) const {
   std::vector<State> result{state};
-  double beta = virus.beta;
-  double gamma = virus.gamma;
+  double const beta = virus.beta;
+  double const gamma = virus.gamma;
   for (int day = 1; day != D; ++day) {
-    auto const prev = result.back();
+    auto const last = result.back();
     State s{};
-    s.S = prev.S - round((beta / people) * prev.S * prev.I);
-    s.I = prev.I + round((beta / people) * prev.S * prev.I) -
-          round(gamma * prev.I);
-    s.R = prev.R + round(gamma * prev.I);
+    s.S = last.S - last((beta / people) * last.S * last.I);
+    s.I = last.I + round((beta / people) * last.S * last.I) -
+          round(gamma * last.I);
+    s.R = last.R + round(gamma * last.I);
     result.push_back(s);
   }
   return result;
