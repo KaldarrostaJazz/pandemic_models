@@ -1,6 +1,7 @@
 #include "Pandemy.hpp"
 
 #include <cmath>
+#include <assert>
 #include <fstream>
 std::vector<State> Pandemy::progression(int D) const {
   std::vector<State> result{state};
