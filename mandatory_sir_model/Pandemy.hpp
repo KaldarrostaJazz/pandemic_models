@@ -7,8 +7,8 @@
 #include "Virus.hpp"
 class Pandemy {
  private:
-  State state{900., 100., 0.};
-  Virus virus{0.8, 0.5};
+  State state{};
+  Virus virus{};
 
  public:
   Pandemy() {}
