@@ -1,32 +1,32 @@
 #include <iostream>
 
+#include "Least_Squares.hpp"
 #include "Pandemy.hpp"
-#include "print.hpp"
+#include "Print.hpp"
 
 int main() {
-  int N;
-  std::cout << "Enter N: ";
-  std::cin >> N;
-  Virus virus;
-  std::cout << "Enter virus parameters:" << '\n';
-  std::cout << "Beta: ";
-  std::cin >> virus.beta;
-  std::cout << "Gamma: ";
-  std::cin >> virus.gamma;
-  State s;
-  std::cout << "Enter initial conditions: " << '\n';
-  std::cout << "S = ";
-  std::cin >> s.S;
-  std::cout << "I = ";
-  std::cin >> s.I;
-  std::cout << "R = ";
-  std::cin >> s.R;
-  int D;
-  std::cout << "Enter duration: ";
-  std::cin >> D;
-  std::cout << '\n';
-  Pandemy pandemy{N, s, virus};
-  auto const states = pandemy.progression(D);
-  // print(states);
-  print_simple(states);
+  std::string option;
+  std::cin >> option;
+  if (option == "sir") {
+    double beta, gamma, S, I, R;
+    int duration;
+    std::cin >> beta >> gamma >> S >> I >> R >> duration;
+    std::cout << '\n';
+    State initial_state{S, I, R};
+    Virus virus{beta, gamma};
+    Pandemy pandemy{initial_state, virus};
+    auto const states = pandemy.progression(duration);
+    // print(states);
+    print_simple(states);
+  } else if (option == "fit") {
+    std::string data_file;
+    std::cin >> data_file;
+    Pandemy pandemy;
+    auto const pandemic_data = pandemy.get_data(data_file);
+    auto const virus = get_parameters(pandemic_data);
+    std::cout << virus.beta << " "
+              << virus.gamma << '\n';
+  } else {
+    std::cerr << "Please, insert valid option\n";
+  }
 }

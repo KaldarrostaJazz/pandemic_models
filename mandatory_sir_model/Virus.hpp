@@ -3,5 +3,6 @@
 struct Virus {
   double beta;
   double gamma;
+  Virus(double beta, double gamma) : beta(beta), gamma(gamma) {}
 };
 #endif

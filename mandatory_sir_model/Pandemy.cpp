@@ -1,27 +1,30 @@
 #include "Pandemy.hpp"
 
+#include <cassert>
 #include <cmath>
-#include <assert>
+#include <cstring>
 #include <fstream>
-std::vector<State> Pandemy::progression(int D) const {
+std::vector<State> Pandemy::progression(int const duration) const {
   std::vector<State> result{state};
   double const beta = virus.beta;
   double const gamma = virus.gamma;
-  for (int day = 1; day != D; ++day) {
+  int const people = state.S + state.I + state.R;
+  for (int day = 1; day != duration; ++day) {
     auto const last = result.back();
-    State s{};
-    s.S = last.S - round((beta / people) * last.S * last.I);
-    s.I = last.I + round((beta / people) * last.S * last.I) -
-          round(gamma * last.I);
-    s.R = last.R + round(gamma * last.I);
-    assert(people == s.S + s.R + s.I);
-    result.push_back(s);
+    State current{last.S - (beta / people) * last.S * last.I,
+                  last.I + (beta / people) * last.S * last.I - gamma * last.I,
+                  last.R + gamma * last.I};
+    if (people != current.S + current.I + current.R) {
+      current.R = people - (current.S + current.I);
+    }
+    assert(people == current.S + current.I + current.R);
+    result.push_back(current);
   }
   return result;
 }
-std::vector<State> Pandemy::get_data(std::string& file) const {
+std::vector<State> Pandemy::get_data(std::string& file) {
   std::vector<State> pandemic_data{};
-  int day, S, I, R;
+  double day, S, I, R;
   std::ifstream data_file;
   data_file.open(file);
   while (data_file.good()) {
