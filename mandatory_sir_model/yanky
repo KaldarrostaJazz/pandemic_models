@@ -1,1 +1,0 @@
-bool Pandemy::operator==(Pandemy const& left, Pandemy const& right) {

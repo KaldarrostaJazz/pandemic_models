@@ -19,12 +19,7 @@ double Chi_Square(std::vector<State> const& data_values,
                  2);
     deviations.push_back(deviation);
   }
-  // double Chi_Square = std::accumulate(deviations.begin(), deviations.end(),
-  // 0);
-  double Chi_Square = 0.;
-  for (auto it = deviations.begin(); it != deviations.end(); ++it) {
-    Chi_Square += *it;
-  }
+  double Chi_Square = std::accumulate(deviations.begin(), deviations.end(), 0.);
   assert(Chi_Square >= 0.);
   return Chi_Square;
 }
