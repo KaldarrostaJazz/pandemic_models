@@ -24,8 +24,7 @@ int main() {
     Pandemy pandemy;
     auto const pandemic_data = pandemy.get_data(data_file);
     auto const virus = get_parameters(pandemic_data);
-    std::cout << virus.beta << " "
-              << virus.gamma << '\n';
+    std::cout << virus.beta << " " << virus.gamma << '\n';
   } else {
     std::cerr << "Please, insert valid option\n";
   }
