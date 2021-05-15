@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20.2)
 project(SIR_model_implementation)
-add_executable(SIR_model State.cpp Virus.cpp Pandemy.cpp main.cpp)
+add_executable(SIR State.cpp Virus.cpp Pandemy.cpp main.cpp)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
