@@ -1,6 +1,5 @@
 #ifndef STATE_HPP
 #define STATE_HPP
-#include <cassert>
 #include <cmath>
 struct State {
   double S;
@@ -10,7 +9,6 @@ struct State {
       : S(susceptibles), I(infected), R(removed) {}
   double N = S + I + R;
   double i_sigma = std::sqrt(I * (N - I) / N);
-  // assert(S > 0. && I > 0. && R > 0.);
 };
 bool operator==(State const& left, State const& right);
 #endif
