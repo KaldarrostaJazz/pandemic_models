@@ -17,6 +17,6 @@ class Pandemy {
   State get_state() const { return state; }
   Virus get_virus() const { return virus; }
   std::vector<State> progression(int const duration) const;
-  std::vector<State> get_data(std::string& file);
+  std::vector<State> get_data(std::string const& file);
 };
 #endif
