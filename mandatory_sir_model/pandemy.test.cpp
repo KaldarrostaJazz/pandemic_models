@@ -1,9 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Pandemy.hpp"
+#include "Least_Squares.hpp"
 #include "doctest.h"
 
 TEST_CASE("TEST PROGRESSION N. 1") {
-  {
     State default_state{};
     Virus default_virus{};
     Pandemy default_pandemy;
@@ -52,5 +52,11 @@ TEST_CASE("TEST PROGRESSION N. 1") {
     CHECK(progression[10].S == doctest::Approx(308.1363529));
     CHECK(progression[10].I == doctest::Approx(58.23030236));
     CHECK(progression[10].R == doctest::Approx(633.6333447));
-  }
+}
+TEST_CASE("TEST FITTING N. 1") {
+	Pandemy default_pandemy;
+	Virus default_virus{};
+	auto const data_to_fit = default_pandemy.progression(200);
+	Virus computed_virus = get_parameters(data_to_fit);
+	CHECK(computed_virus == default_virus);
 }
