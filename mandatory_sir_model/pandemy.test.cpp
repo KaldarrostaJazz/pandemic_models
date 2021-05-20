@@ -60,3 +60,15 @@ TEST_CASE("TEST FITTING N. 1") {
   Virus computed_virus = get_parameters(data_to_fit);
   CHECK(computed_virus == default_virus);
 }
+TEST_CASE("TEST PROGRESSION N. 2") {
+  State initial_state{50000., 200.};
+  Virus virus{0.7, 0.4};
+  Pandemy pandemy{initial_state, virus};
+  auto const progression = pandemy.progression(20);
+  CHECK(progression[8].S == doctest::Approx(46874.23));
+  CHECK(progression[12].I == doctest::Approx(3396.296));
+  CHECK(progression[19].R == doctest::Approx(19145.16));
+  for (int i = 0; i != 20; ++i) {
+    CHECK(doctest::Approx(progression[i].N) == initial_state.N);
+  }
+}
