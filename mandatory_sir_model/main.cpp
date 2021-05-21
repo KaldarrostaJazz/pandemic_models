@@ -50,7 +50,6 @@ int main(int argc, const char** argv) {
                 << '\n';
       return 1;
     }
-    std::cout << '\n';
     State initial_state{S, I, R};
     Virus virus{beta, gamma};
     Pandemy pandemy{initial_state, virus};
