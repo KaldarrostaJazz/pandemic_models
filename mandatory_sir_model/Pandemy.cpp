@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstring>
 #include <fstream>
+#include <stdexcept>
 std::vector<State> Pandemy::progression(int const duration) const {
   std::vector<State> result{state};
   double const beta = virus.beta;
@@ -25,8 +26,11 @@ std::vector<State> Pandemy::progression(int const duration) const {
 std::vector<State> Pandemy::get_data(std::string const& file) {
   std::vector<State> pandemic_data{};
   double day, S, I, R;
-  std::ifstream data_file;
-  data_file.open(file);
+  std::ifstream data_file{file};
+  if (!data_file) {
+    throw std::runtime_error(
+        "The choosen file doens't exist. Maybe you've written the wrong path");
+  }
   while (data_file.good()) {
     data_file >> day >> S >> I >> R;
     State s = {S, I, R};
