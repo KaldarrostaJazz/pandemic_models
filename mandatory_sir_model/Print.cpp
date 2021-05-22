@@ -1,6 +1,8 @@
-#include <iostream>
-#include "Pandemy.hpp"
 #include "Print.hpp"
+
+#include <iostream>
+
+#include "Pandemy.hpp"
 
 void print(std::vector<State> const& result) {
   int day = 1;
