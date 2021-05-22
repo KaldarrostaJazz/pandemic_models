@@ -16,7 +16,11 @@ std::vector<State> Pandemy::progression(int const duration) const {
                   last.I + (beta / people) * last.S * last.I - gamma * last.I,
                   last.R + gamma * last.I};
     if (people != current.S + current.I + current.R) {
+	    if (current.R > 1.) {
       current.R = people - (current.S + current.I);
+	    } else {
+		    current.S = people - (current.I + current.R);
+	    }
     }
     assert(people == current.S + current.I + current.R);
     result.push_back(current);
