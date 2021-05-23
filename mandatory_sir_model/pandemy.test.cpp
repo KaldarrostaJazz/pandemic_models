@@ -45,7 +45,3 @@ TEST_CASE("TEST PROGRESSION N. 2") {
     CHECK(doctest::Approx(progression[i].N) == initial_state.N);
   }
 }
-// TEST_CASE("TESTING THROWS") {
-//	State invalid_state{};
-//	CHECK_THROWS(invalid_state{-270., 100., 0.});
-//}
