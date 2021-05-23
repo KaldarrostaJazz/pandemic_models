@@ -13,7 +13,7 @@ class Pandemy {
  public:
   Pandemy() {}
   Pandemy(State const& state, Virus const& virus)
-      : state(state), virus(virus) {}
+      : state{state}, virus{virus} {}
   State get_state() const { return state; }
   Virus get_virus() const { return virus; }
   std::vector<State> progression(int const duration) const;
