@@ -6,7 +6,7 @@
 #include "Virus.hpp"
 
 void print_simple(state_type const& x, double t) {
-  std::cout << t << " " << x[0] << " " << x[1] << " " << x[2] << " " << x[3]
+  std::cout << t << " " << round(x[0]) << " " << round(x[1]) << " " << round(x[2]) << " " << round(x[3])
             << '\n';
 }
 

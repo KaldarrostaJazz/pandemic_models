@@ -15,6 +15,10 @@ std::vector<State> Pandemy::progression(int const duration) const {
     State current{last.S - (beta / people) * last.S * last.I,
                   last.I + (beta / people) * last.S * last.I - gamma * last.I,
                   last.R + gamma * last.I};
+    /*State current;
+    current.S =last.S - (beta / people) * last.S * last.I;
+    current.I =last.I + (beta / people) * last.S * last.I - gamma * last.I;
+    current.R =people - (current.S + current.I);*/
     if (people != current.S + current.I + current.R) {
 	    if (current.R > 1.) {
       current.R = people - (current.S + current.I);
@@ -37,7 +41,7 @@ std::vector<State> Pandemy::get_data(std::string const& file) {
   }
   while (data_file.good()) {
     data_file >> day >> S >> I >> R;
-    State s = {S, I, R};
+    State s{S, I, R};
     pandemic_data.push_back(s);
   }
   data_file.close();

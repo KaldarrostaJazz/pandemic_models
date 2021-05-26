@@ -6,9 +6,10 @@
 void print(std::vector<State> const& result) {
   int day = 1;
   for (auto& state : result) {
+	  State rounded_state = copy_round(state);
     std::cout << "*--------------------------------------------------*" << '\n';
-    std::cout << "Day = " << day << "S = " << state.S << " I = " << state.I
-              << " R = " << state.R << '\n';
+    std::cout << "Day = " << day << "S = " << rounded_state.S << " I = " << rounded_state.I
+              << " R = " << rounded_state.R << '\n';
     ++day;
   }
 }
@@ -16,7 +17,8 @@ void print(std::vector<State> const& result) {
 void print_simple(std::vector<State> const& result) {
   int day = 1;
   for (auto& state : result) {
-    std::cout << day << " " << state.S << " " << state.I << " " << state.R
+	  State rounded_state = copy_round(state);
+    std::cout << day << " " << rounded_state.S << " " << rounded_state.I << " " << rounded_state.R
               << '\n';
     ++day;
   }
