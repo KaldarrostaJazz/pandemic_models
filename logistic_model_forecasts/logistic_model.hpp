@@ -27,20 +27,21 @@ class Acquisition {
 };
 class Fit {
  public:
-  Fit(int m, int k, double alpha, std::string& file_name)
+  Fit(double m, double k, double alpha, std::string& file_name)
       : m{m}, k{k}, alpha{alpha}, file_name{file_name} {
     if (alpha <= 0. || alpha >= 1.)
       throw std::range_error(
           "Invalid value for alpha. Valid values: [0. < aplha < 1.]");
-    if (m <= 0 || k <= m)
+    if (m <= 0. || k <= m)
       throw std::range_error(
-          "Invalid value for (m, k). Valid values: k > m > 0");
+          "Invalid value for (m, k). Valid values: k > m > 0.");
   }
-  int m, k;
+  double m, k;
   double alpha;
   std::string file_name;
   Acquisition pandemy{file_name};
   std::array<double, 3> initial_guess();
+  double variance(Logistic& theoretical_pandemy);
   double std_dev(Logistic& theoretical_pandemy);
   std::array<double, 3> var_grad(Logistic& theoretical_pandemy);
   std::array<double, 3> steepest_descent(std::array<double, 3> const& delta);

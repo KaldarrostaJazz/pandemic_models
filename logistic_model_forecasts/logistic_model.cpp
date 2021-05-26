@@ -12,7 +12,7 @@ double Logistic::dcases_t(int t) {
 }
 std::array<double, 3> Logistic::cases_grad(int t_end) {
   std::array<double, 3> gradient;
-  for (int i = 1; i <= t_end; ++i) {
+  for (int i = 0; i != t_end; ++i) {
     gradient[0] += 1 / (1 + A * exp(-r * i));
     gradient[1] += -K * exp(-r * i) / pow(1 + A * exp(-r * i), 2);
     gradient[2] += r * K * A * exp(-r * i) / pow(1 + A * exp(-r * i), 2);
@@ -21,13 +21,10 @@ std::array<double, 3> Logistic::cases_grad(int t_end) {
 }
 void Logistic::log(int t_end) {
   std::ofstream output_file{"logistic_pred.dat"};
-  std::ofstream output_file2{"logistic_pred_daily.dat"};
-  for (int t = 1; t <= t_end; ++t) {
-    output_file << t << " " << cases_t(t) << '\n';
-    output_file2 << t << " " << dcases_t(t) << '\n';
+  for (int t = 0; t != t_end; ++t) {
+    output_file << t + 1 << " " << cases_t(t) << " " << dcases_t(t) << '\n';
   }
   output_file.close();
-  output_file2.close();
 }
 //
 // class Acquisition methods definitions
@@ -64,14 +61,14 @@ std::array<double, 3> Fit::initial_guess() {
   int x = pandemy.Data()[k - 2 * m - 1];
   int y = pandemy.Data()[k - m - 1];
   int z = pandemy.Data()[k - 1];
-  long long int k_up = ( x * y - 2 * x * z + y * z);
-  long long int den = y * y - x * z;
-  long long int A_up = (z - y) * (y - x); 
-  long int base1 = z * (y - x);
-  long int base2 =  x * (z - y);
-  long double base = base1/base2;
-  long double exponent = (k - m) / m;
-  long double power = pow(base, exponent);
+  double k_up = (x * y - 2 * x * z + y * z);
+  double den = y * y - x * z;
+  double A_up = (z - y) * (y - x);
+  double base1 = z * (y - x);
+  double base2 = x * (z - y);
+  double base = base1 / base2;
+  double exponent = (k - m) / m;
+  double power = pow(base, exponent);
   // K_0
   parameters[0] = y * k_up / den;
   // A_0
@@ -82,19 +79,25 @@ std::array<double, 3> Fit::initial_guess() {
       parameters[0] < z) {
     throw std::range_error(
         "It wasn't possible to find an initial guess for K_0, A_0, r_0\n");
-  }
-  else {
+  } else {
     std::cout << "An initial guess was found:\n"
               << "K_0 = " << parameters[0] << " A_0 = " << parameters[1]
-              << " r_0 = " << parameters[2] << " " << exponent << '\n';
+              << " r_0 = " << parameters[2] << '\n';
   }
   return parameters;
+}
+double Fit::variance(Logistic& theoretical_pandemy) {
+  int n = pandemy.Data().size();
+  double variance = 0.;
+  for (int i = 0; i != n; ++i)
+    variance += pow(pandemy.Data()[i] - theoretical_pandemy.cases_t(i), 2);
+  return variance / n;
 }
 double Fit::std_dev(Logistic& theoretical_pandemy) {
   int n = pandemy.Data().size();
   double variance = 0.;
   for (int i = 0; i != n; ++i)
-    variance += pandemy.Data()[i] - theoretical_pandemy.cases_t(i + 1);
+    variance += pandemy.Data()[i] - theoretical_pandemy.cases_t(i);
   return variance / n;
 }
 std::array<double, 3> Fit::var_grad(Logistic& theoretical_pandemy) {
@@ -110,11 +113,15 @@ std::array<double, 3> Fit::var_grad(Logistic& theoretical_pandemy) {
 std::array<double, 3> Fit::steepest_descent(
     std::array<double, 3> const& delta) {
   std::array<double, 3> p = initial_guess();
-  for (int iteration = 1; iteration != max_number_of_iterations; ++iteration) {
+  for (int iteration = 0; iteration != max_number_of_iterations; ++iteration) {
     Logistic lattice_curve{p};
     p[0] += -alpha * var_grad(lattice_curve)[0] * delta[0];
     p[1] += -alpha * var_grad(lattice_curve)[1] * delta[1];
     p[2] += -alpha * var_grad(lattice_curve)[2] * delta[2];
+    if (-alpha * var_grad(lattice_curve)[0] * delta[0] <= 0.0001 &&
+        -alpha * var_grad(lattice_curve)[1] * delta[1] <= 0.0001 &&
+        -alpha * var_grad(lattice_curve)[2] * delta[2] <= 0.0001)
+      break;
   }
   return p;
 }
