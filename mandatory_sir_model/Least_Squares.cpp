@@ -10,16 +10,14 @@
 
 double Chi_Square(std::vector<State> const& data_values,
                   std::vector<State> const& theoretical_values) {
-  std::vector<double> deviations{};
   int stop = std::min(data_values.size(), theoretical_values.size());
+  double Chi_Square = 0.;
   for (int day = 0; day != stop; ++day) {
-    double deviation =
+    Chi_Square +=
         std::pow((data_values[day].I - theoretical_values[day].I) /
                      data_values[day].i_sigma,
                  2);
-    deviations.push_back(deviation);
   }
-  double Chi_Square = std::accumulate(deviations.begin(), deviations.end(), 0.);
   assert(Chi_Square >= 0.);
   return Chi_Square;
 }
