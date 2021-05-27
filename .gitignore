@@ -1,6 +1,7 @@
 *.dat
 *.out
 *.csv
+*.pdf
 mandatory_sir_model/build/
 mandatory_sir_model/doctest.h
 mandatory_sir_model/data_converter.cpp
