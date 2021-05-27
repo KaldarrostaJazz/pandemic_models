@@ -15,18 +15,15 @@ std::vector<State> Pandemy::progression(int const duration) const {
     State current{last.S - (beta / people) * last.S * last.I,
                   last.I + (beta / people) * last.S * last.I - gamma * last.I,
                   last.R + gamma * last.I};
-    /*State current;
-    current.S =last.S - (beta / people) * last.S * last.I;
-    current.I =last.I + (beta / people) * last.S * last.I - gamma * last.I;
-    current.R =people - (current.S + current.I);*/
-    if (people != current.S + current.I + current.R) {
+    double diff = people - (current.S + current.I + current.R);
+    if (diff < -0.001 || diff > 0.001) {
 	    if (current.R > 1.) {
       current.R = people - (current.S + current.I);
 	    } else {
 		    current.S = people - (current.I + current.R);
 	    }
     }
-    assert(people == current.S + current.I + current.R);
+    assert(-0.001 < diff && diff < 0.001);
     result.push_back(current);
   }
   return result;

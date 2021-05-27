@@ -11,9 +11,9 @@ class Pandemy {
   Virus virus{};
 
  public:
-  Pandemy() {}
-  Pandemy(State const& state, Virus const& virus)
-      : state{state}, virus{virus} {}
+  Pandemy() = default; 
+  Pandemy(State const& m_state, Virus const& m_virus)
+      : state{m_state}, virus{m_virus} {}
   State get_state() const { return state; }
   Virus get_virus() const { return virus; }
   std::vector<State> progression(int const duration) const;
