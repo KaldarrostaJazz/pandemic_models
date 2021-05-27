@@ -39,7 +39,7 @@ class Fit {
   double m, k;
   double alpha;
   std::string file_name;
-  Acquisition pandemy{file_name};
+  Acquisition pandemy {file_name};
   std::array<double, 3> initial_guess();
   double variance(Logistic& theoretical_pandemy);
   double std_dev(Logistic& theoretical_pandemy);

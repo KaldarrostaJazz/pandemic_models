@@ -69,20 +69,20 @@ std::array<double, 3> Fit::initial_guess() {
   double base = base1 / base2;
   double exponent = (k - m) / m;
   double power = pow(base, exponent);
-  // K_0
+  // K(0)
   parameters[0] = y * k_up / den;
-  // A_0
+  // A(0)
   parameters[1] = (A_up / den) * power;
-  // r_0
+  // r(0)
   parameters[2] = log(base) / m;
   if (parameters[0] <= 0. || parameters[1] <= 0. || parameters[2] <= 0. ||
       parameters[0] < z) {
     throw std::range_error(
-        "It wasn't possible to find an initial guess for K_0, A_0, r_0\n");
+        "It wasn't possible to find an initial guess for K(0), A(0), r(0)\n");
   } else {
     std::cout << "An initial guess was found:\n"
-              << "K_0 = " << parameters[0] << " A_0 = " << parameters[1]
-              << " r_0 = " << parameters[2] << '\n';
+              << "K(0) = " << parameters[0] << " A(0) = " << parameters[1]
+              << " r(0) = " << parameters[2] << '\n';
   }
   return parameters;
 }
