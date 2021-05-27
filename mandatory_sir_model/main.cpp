@@ -72,10 +72,11 @@ int main(int argc, const char** argv) {
     Pandemy pandemy;
     auto const pandemic_data = pandemy.get_data(data_file);
     auto const virus = get_parameters(pandemic_data);
-    std::cout << virus.beta << " " << virus.gamma << '\n';
+    //print_fitting(pandemic_data,
+    std::cout << "Estimated parameters:\n" << virus.beta << " " << virus.gamma << '\n';
     return 0;
   } else {
-    std::cerr << "Please, insert valid option\n";
+    std::cerr << "Please, insert a valid option, either "fit" or "sir"\n";
     return 0;
   }
 }
