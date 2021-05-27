@@ -120,8 +120,10 @@ std::array<double, 3> Fit::steepest_descent(
     p[2] += -alpha * var_grad(lattice_curve)[2] * delta[2];
     if (-alpha * var_grad(lattice_curve)[0] * delta[0] <= 0.0001 &&
         -alpha * var_grad(lattice_curve)[1] * delta[1] <= 0.0001 &&
-        -alpha * var_grad(lattice_curve)[2] * delta[2] <= 0.0001)
-      break;
+        -alpha * var_grad(lattice_curve)[2] * delta[2] <= 0.0001) {
+	    std::cout << "The series converged after " << iteration << " iterations" << '\n';
+	    break;
+    }
   }
   return p;
 }
