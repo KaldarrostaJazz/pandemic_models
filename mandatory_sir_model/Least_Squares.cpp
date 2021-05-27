@@ -33,6 +33,7 @@ Virus get_parameters(std::vector<State> const& pandemic_data) {
     }
   }
   auto it = std::min_element(chi_squares.begin(), chi_squares.end());
+  std::cout << "Chi Square = " << *it << '\n';
   int index = std::distance(chi_squares.begin(), it);
   int b = index / 100, g = index % 100;
   double beta = b / 100., gamma = g / 100.;
