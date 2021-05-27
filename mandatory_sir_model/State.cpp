@@ -17,7 +17,5 @@ State copy_round(State const& state) {
 			rounded_state.S = rounded_state.N - (rounded_state.I + rounded_state.R);
 		}
 	}
-	assert(rounded_state.N - (rounded_state.I + rounded_state.I + rounded_state.R) > -0.001); 
-	assert(rounded_state.N - (rounded_state.I + rounded_state.I + rounded_state.R) < 0.001);
 	return rounded_state;
 }
