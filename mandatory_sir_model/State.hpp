@@ -1,14 +1,13 @@
 #ifndef STATE_HPP
 #define STATE_HPP
+#include <cassert>
 #include <cmath>
 #include <stdexcept>
-#include <cassert>
 struct State {
   double S;
   double I;
   double R;
-  State(double S = 900., double I = 100., double R = 0.) 
-  : S{S}, I{I}, R{R} {
+  State(double S = 900., double I = 100., double R = 0.) : S{S}, I{I}, R{R} {
     if (S < 0. || I < 0. || R < 0.) {
       throw std::range_error("S, I, R must be positive values");
     }

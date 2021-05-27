@@ -11,7 +11,7 @@ class Pandemy {
   Virus virus{};
 
  public:
-  Pandemy() = default; 
+  Pandemy() = default;
   Pandemy(State const& m_state, Virus const& m_virus)
       : state{m_state}, virus{m_virus} {}
   State get_state() const { return state; }

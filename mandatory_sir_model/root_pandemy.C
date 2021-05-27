@@ -3,7 +3,7 @@ void setStyle() {
   gStyle->SetPalette(57);
   gStyle->SetOptTitle(0);
 }
-void pandemy(const char* argv) {
+void pandemy(const char *argv) {
   TCanvas *c = new TCanvas("c", "Grafico dati pandemia");
   c->SetGrid();
   TGraph *g1 = new TGraph(argv, "%lg %lg %*lg %*lg");
