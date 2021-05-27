@@ -1,7 +1,7 @@
 #include "logistic_model.hpp"
-//
+/////////////////////////////////////
 // class Logistic methods definitions
-//
+/////////////////////////////////////
 double Logistic::cases_t(int t) {
   double cases_t = K / (1 + A * exp(-r * t));
   return cases_t;
@@ -26,9 +26,9 @@ void Logistic::log(int t_end) {
   }
   output_file.close();
 }
-//
+////////////////////////////////////////
 // class Acquisition methods definitions
-//
+////////////////////////////////////////
 std::vector<int> Acquisition::Data() {
   std::vector<int> Data;
   std::ifstream data_file{file_name};
@@ -53,9 +53,9 @@ std::vector<int> Acquisition::dData() {
     dData[i] += -dData[i - 1];
   return dData;
 }
-//
+//////////////////////////////////////////////
 // class Fit variables and methods definitions
-//
+//////////////////////////////////////////////
 std::array<double, 3> Fit::initial_guess() {
   std::array<double, 3> parameters;
   int x = pandemy.Data()[k - 2 * m - 1];
