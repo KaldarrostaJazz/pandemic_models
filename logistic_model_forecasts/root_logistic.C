@@ -4,6 +4,8 @@ void setStyle() {
   gStyle->SetOptTitle(0);
 }
 void print_fit(const char* argv) {
+	std::string name= std::string("Fitting of ") + std::string(argv);
+	const char* name_conv = name.c_str();
   TCanvas* canva = new TCanvas("canva", "Data Fitting");
   canva->SetGrid();
   TGraph* graph_data = new TGraph(argv, "%lg %lg");
@@ -20,7 +22,7 @@ void print_fit(const char* argv) {
   multi->Draw();
   multi->Draw("A");
   TLegend* legend = new TLegend(0.1, 0.7, 0.48, 0.9);
-  legend->SetHeader("Fitting of 'argv'", "C");
+  legend->SetHeader(name_conv, "C");
   legend->AddEntry(graph_data, "Experimental data", "f");
   legend->AddEntry(graph_prev, "Model previsions and fitting", "l");
   legend->Draw();

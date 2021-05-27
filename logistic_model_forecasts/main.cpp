@@ -15,7 +15,8 @@ int main(int argc, const char** argv) {
              lyra::opt(m, "m - value")["-m"]["--Mvalue"].required() |
              lyra::opt(k, "k - value")["-k"]["--Kvalue"].required() |
              lyra::opt(alpha, "alpha convergence factor")["-a"]["--alpha"] |
-             lyra::opt(file_name, "file containing the data")["-f"]["--file"].required();
+             lyra::opt(file_name, "file containing the data")["-f"]["--file"]
+                 .required();
   auto parser = cli.parse({argc, argv});
   if (!parser)
     std::cerr << "Error in command line: " << parser.errorMessage() << '\n';
@@ -23,7 +24,8 @@ int main(int argc, const char** argv) {
   std::array<double, 3> parameters = pandemic_data.steepest_descent(delta);
   std::cout << "Estimated parameters:\n"
             << "K = " << parameters[0] << "| A = " << parameters[1]
-            << "| r = " << parameters[2] << "\nThe maximum daily cases day was day "
+            << "| r = " << parameters[2]
+            << "\nThe maximum daily cases day was day "
             << log(parameters[1]) / parameters[2] << " from the data day one"
             << '\n';
   Logistic model_data{parameters};
