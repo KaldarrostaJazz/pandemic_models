@@ -76,7 +76,7 @@ int main(int argc, const char** argv) {
     std::cout << "Estimated parameters:\n" << virus.beta << " " << virus.gamma << '\n';
     return 0;
   } else {
-    std::cerr << "Please, insert a valid option, either "fit" or "sir"\n";
+    std::cerr << "Please, insert a valid option, either fit or sir\n";
     return 0;
   }
 }
