@@ -7,15 +7,22 @@
 
 int main(int argc, const char** argv) {
   std::string option;
+  bool show_help = false;
   auto cli = lyra::cli();
+  cli.add_argument(lyra::help(show_help));
   cli.add_argument(lyra::opt(option, "running_option")
                        .name("-o")
                        .name("--opt")
                        .help("Choose if fit_mode or sir_mode"));
   auto pippo_inzaghi = cli.parse({argc, argv});
+  if (show_help) {
+    std::cerr << cli << '\n';
+    return 0;
+  }
   if (option == "sir") {
     double beta, gamma, S, I, R;
     int duration;
+    cli.add_argument(lyra::help(show_help));
     cli.add_argument(lyra::opt(beta, "beta")
                          .name("-b")
                          .name("--beta")
@@ -48,6 +55,7 @@ int main(int argc, const char** argv) {
     if (!pippo_franco) {
       std::cerr << "Error in command line: " << pippo_franco.errorMessage()
                 << '\n';
+      std::cerr << cli << '\n';
       return 1;
     }
     State initial_state{S, I, R};
@@ -60,9 +68,11 @@ int main(int argc, const char** argv) {
   } else if (option == "fit") {
     std::string data_file;
     double precision = 0.01;
+    cli.add_argument(lyra::help(show_help));
     cli.add_argument(lyra::opt(data_file, "data_file")
                          .name("-f")
                          .name("--file")
+                         .required()
                          .help("Select the file containing the data to fit"));
     cli.add_argument(
         lyra::opt(precision, "fit precision")
@@ -74,6 +84,7 @@ int main(int argc, const char** argv) {
     if (!pippo_baudo) {
       std::cerr << "Error in command line: " << pippo_baudo.errorMessage()
                 << '\n';
+      std::cerr << cli << '\n';
       return 1;
     }
     Pandemy pandemy;
@@ -85,6 +96,7 @@ int main(int argc, const char** argv) {
     return 0;
   } else {
     std::cerr << "Please, insert a valid option, either fit or sir\n";
+    std::cerr << cli << '\n';
     return 0;
   }
 }
