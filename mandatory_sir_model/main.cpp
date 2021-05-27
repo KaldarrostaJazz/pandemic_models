@@ -59,10 +59,16 @@ int main(int argc, const char** argv) {
     return 0;
   } else if (option == "fit") {
     std::string data_file;
+    double precision = 0.01;
     cli.add_argument(lyra::opt(data_file, "data_file")
                          .name("-f")
                          .name("--file")
                          .help("Select the file containing the data to fit"));
+    cli.add_argument(lyra::opt(precision, "fit precision")
+		    .name("-p")
+		    .name("--precision")
+		    .choices(0.1, 0.01, 0.001)
+		    .help("Set the decimal precision of the estimated paramteres"));
     auto pippo_baudo = cli.parse({argc, argv});
     if (!pippo_baudo) {
       std::cerr << "Error in command line: " << pippo_baudo.errorMessage()
@@ -71,7 +77,7 @@ int main(int argc, const char** argv) {
     }
     Pandemy pandemy;
     auto const pandemic_data = pandemy.get_data(data_file);
-    auto const virus = get_parameters(pandemic_data);
+    auto const virus = get_parameters(pandemic_data, precision);
     //print_fitting(pandemic_data,
     std::cout << "Estimated parameters:\n" << virus.beta << " " << virus.gamma << '\n';
     return 0;

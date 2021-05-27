@@ -30,7 +30,7 @@ TEST_CASE("TEST FITTING N. 1") {
   Pandemy default_pandemy;
   Virus default_virus{};
   auto const data_to_fit = default_pandemy.progression(200);
-  Virus computed_virus = get_parameters(data_to_fit);
+  Virus computed_virus = get_parameters(data_to_fit, 0.01);
   CHECK(computed_virus == default_virus);
 }
 TEST_CASE("TEST PROGRESSION N. 2") {
