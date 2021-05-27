@@ -7,7 +7,6 @@ void print_fit(const char* argv) {
   TCanvas* canva = new TCanvas("canva", "Data Fitting");
   canva->SetGrid();
   TGraph* graph_data = new TGraph(argv, "%lg %lg");
-  //graph_data->SetFillStyle(2);
   graph_data->SetFillColor(kGray + 1);
   TGraph* graph_prev = new TGraph("logistic_pred.dat", "%lg %lg");
   graph_prev->SetLineColor(kRed + 1);
