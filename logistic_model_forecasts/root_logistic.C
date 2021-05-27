@@ -4,8 +4,8 @@ void setStyle() {
   gStyle->SetOptTitle(0);
 }
 void print_fit(const char* argv) {
-	std::string name= std::string("Fitting of ") + std::string(argv);
-	const char* name_conv = name.c_str();
+  std::string name = std::string("Fitting of ") + std::string(argv);
+  const char* name_conv = name.c_str();
   TCanvas* canva = new TCanvas("canva", "Data Fitting");
   canva->SetGrid();
   TGraph* graph_data = new TGraph(argv, "%lg %lg");
