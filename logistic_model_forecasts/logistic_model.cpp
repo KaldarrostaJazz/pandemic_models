@@ -32,7 +32,7 @@ void Logistic::log(int t_end) {
 std::vector<int> Acquisition::Data() {
   std::vector<int> Data;
   std::ifstream data_file{file_name};
-  if (!data_file) std::cerr << "Select a valid path";
+  if (!data_file) throw std::runtime_error("Select a valid path");
   while (data_file.good()) {
     int t, cases;
     data_file >> t >> cases;
@@ -43,7 +43,7 @@ std::vector<int> Acquisition::Data() {
 std::vector<int> Acquisition::dData() {
   std::vector<int> dData;
   std::ifstream data_file{file_name};
-  if (!data_file) std::cerr << "Select a valid path";
+  if (!data_file) throw std::runtime_error("Select a valid path");
   while (data_file.good()) {
     int t, cases;
     data_file >> t >> cases;
