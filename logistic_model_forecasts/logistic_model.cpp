@@ -58,9 +58,14 @@ std::vector<int> Acquisition::dData() {
 //////////////////////////////////////////////
 std::array<double, 3> Fit::initial_guess() {
   std::array<double, 3> parameters;
+  if (k >= pandemy.Data().size())
+    throw std::range_error("k must be smaller than the number of total days\n");
   int x = pandemy.Data()[k - 2 * m - 1];
   int y = pandemy.Data()[k - m - 1];
   int z = pandemy.Data()[k - 1];
+  if (x == 0 || y == 0 || z == 0)
+    throw std::range_error(
+        "It wasn't possible to find an initial guess for K(0), A(0), r(0)\n");
   double k_up = (x * y - 2 * x * z + y * z);
   double den = y * y - x * z;
   double A_up = (z - y) * (y - x);
@@ -69,6 +74,9 @@ std::array<double, 3> Fit::initial_guess() {
   double base = base1 / base2;
   double exponent = (k - m) / m;
   double power = pow(base, exponent);
+  if (den == 0. || base <= 0.)
+    throw std::range_error(
+        "It wasn't possible to find an initial guess for K(0), A(0), r(0)\n");
   // K(0)
   parameters[0] = y * k_up / den;
   // A(0)
@@ -76,14 +84,13 @@ std::array<double, 3> Fit::initial_guess() {
   // r(0)
   parameters[2] = log(base) / m;
   if (parameters[0] <= 0. || parameters[1] <= 0. || parameters[2] <= 0. ||
-      parameters[0] < z) {
+      parameters[0] < z)
     throw std::range_error(
         "It wasn't possible to find an initial guess for K(0), A(0), r(0)\n");
-  } else {
-    std::cout << "An initial guess was found:\n"
-              << "K(0) = " << parameters[0] << " A(0) = " << parameters[1]
-              << " r(0) = " << parameters[2] << '\n';
-  }
+  std::cout << "An initial guess was found:\n"
+            << "K(0) = " << parameters[0] << " A(0) = " << parameters[1]
+            << " r(0) = " << parameters[2] << '\n';
+
   return parameters;
 }
 double Fit::variance(Logistic& theoretical_pandemy) {
