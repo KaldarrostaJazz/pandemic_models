@@ -35,17 +35,3 @@ void print_simple(std::vector<State> const& result) {
     ++day;
   }
 }
-/*void print_fitting(std::vector<State> const& data, std::vector<State> const&
-fit) { std::ifstream file_to_read{data_name}; std::ofstream
-file_to_write{"sir_fitting_predictions.csv"}; file_to_write <<
-"day,data_S,fit_S,data_I,fit_I,data_R,fit_R" << '\n'; for (auto& state : fit) {
-                int day, S, I, R;
-                file_to_read >> d >> S >> I >> R;
-                file_to_write << day << "," << S << "," << state.S << "," << I
-<< "," << state.I << "," << R << "," << state.R << '\n'; assert(state.N -
-(state.S + state.I + state.R) > -0.001); assert(state.N - (state.S + state.I +
-state.R) > 0.001);
-        }
-        file_to_read.close();
-        file_to_write.close();
-}*/
