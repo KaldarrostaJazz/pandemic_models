@@ -31,10 +31,10 @@ class Fit {
       : m{m}, k{k}, alpha{alpha}, file_name{file_name} {
     if (alpha <= 0. || alpha >= 1.)
       throw std::range_error(
-          "Invalid value for alpha. Valid values: [0. < aplha < 1.]");
-    if (m <= 0. || k <= m)
+          "Invalid value for alpha. Valid values: [0. < aplha < 1.]\n");
+    if (m <= 0. || k <= m || k <= 2 * m)
       throw std::range_error(
-          "Invalid value for (m, k). Valid values: k > m > 0.");
+          "Invalid value for (m, k). Valid values: k > 2 * m > 0.\n");
   }
   double m, k;
   double alpha;
