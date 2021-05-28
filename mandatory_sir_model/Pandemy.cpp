@@ -34,7 +34,8 @@ std::vector<State> Pandemy::get_data(std::string const& file) {
   std::ifstream data_file{file};
   if (!data_file) {
     throw std::runtime_error(
-        "The choosen file doens't exist. Maybe you've entered the wrong path.");
+        "The choosen file doens't exist. Maybe you've entered the wrong "
+        "path.\n");
   }
   while (data_file.good()) {
     data_file >> day >> S >> I >> R;

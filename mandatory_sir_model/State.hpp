@@ -8,9 +8,8 @@ struct State {
   double I;
   double R;
   State(double S = 900., double I = 100., double R = 0.) : S{S}, I{I}, R{R} {
-    if (S < 0. || I < 0. || R < 0.) {
-      throw std::range_error("S, I, R must be positive values");
-    }
+    if (S < 0. || I < 0. || R < 0.)
+      throw std::range_error("S, I, R must be positive values\n");
   }
   double N = S + I + R;
   double i_sigma = std::sqrt(I * (N - I) / N);
