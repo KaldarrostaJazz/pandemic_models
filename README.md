@@ -1,6 +1,10 @@
 # A C++ implementation of the sir and logistics models for pandemic prediction.
-//introduction
+// introduction
 ## The sir model.
-//explanation
+// explanation
+### Limits of the model.
+// explanation
 ## The logistic model.
-//explanation
+// explanation
+### Limits of the model.
+// explanation
