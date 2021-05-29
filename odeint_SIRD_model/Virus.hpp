@@ -3,7 +3,7 @@
 struct Virus {
   double beta;   // infection rate
   double gamma;  // inverse of the infection period
-  double f;      // dead-removed ratio
-  Virus(double beta, double gamma, double f) : beta(beta), gamma(gamma), f(f) {}
+  double epsilon;      // inverse of the recovery rate
+  Virus(double beta, double gamma, double epsilon) : beta(beta), gamma(gamma), epsilon(epsilon) {}
 };
 #endif
