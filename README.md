@@ -1,1 +1,1 @@
-# A C++ implementation of the sir and the logistic model for forecastings pandemic.
+# A C++ implementation of the sir and logistics models for pandemic prediction.
