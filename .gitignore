@@ -1,5 +1,4 @@
 *.out
-*.csv
 *.pdf
 mandatory_sir_model/build/
 mandatory_sir_model/doctest.h
