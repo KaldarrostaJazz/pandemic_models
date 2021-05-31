@@ -34,3 +34,15 @@ TEST_CASE("TEST FIT CLASS METHODS N. 1") {
   CHECK(initial_parameters[1] == doctest::Approx(225.23008));
   CHECK(initial_parameters[2] == doctest::Approx(0.2012299));
 }
+TEST_CASE("TEST FIT CLASS METHODS N. 2") {
+	std::array<double, 3> p {88418., 213., 0.2035};
+	std::string file_name = "class_acquisition_data_test";
+	Logistic disease {p};
+	Fit fitting {14, 35, 0.0005, file_name};
+	double variance = fitting.variance(disease);
+	CHECK(variance == doctest::Approx(867749));
+	std::array<double, 3> result = fitting.steepest_descent({0.1, 0.001, 1.e-9});
+	CHECK(result[0] == doctest::Approx(88418.2));
+	CHECK(result[1] == doctest::Approx(213.217));
+	CHECK(result[2] == doctest::Approx(0.203533));
+}

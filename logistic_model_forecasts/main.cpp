@@ -26,7 +26,7 @@ int main(int argc, const char** argv) {
     std::cout << "Estimated parameters:\n"
               << "K = " << parameters[0] << "| A = " << parameters[1]
               << "| r = " << parameters[2] << "\nEstimated infected at t = 0: "
-              << parameters[0] / (parameters[1] + 1);
+              << parameters[0] / (parameters[1] + 1)
     << "\nThe maximum daily cases day was day "
     << log(parameters[1]) / parameters[2] << " from the data day one" << '\n';
     Logistic model_data{parameters};
