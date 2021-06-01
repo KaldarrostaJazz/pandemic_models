@@ -10,7 +10,7 @@
 int const max_number_of_iterations = 10000;
 class Logistic {
  public:
-  Logistic(std::array<double, 3> parameters)
+  Logistic(std::array<double, 3>& parameters)
       : K{parameters[0]}, A{parameters[1]}, r{parameters[2]} {}
   double K, A, r;
   double cases_t(int t);
