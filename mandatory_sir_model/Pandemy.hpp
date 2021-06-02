@@ -1,12 +1,12 @@
 #ifndef PROGRESSION_HPP
 #define PROGRESSION_HPP
-#include <string>
-#include <vector>
 #include <cassert>
 #include <cmath>
 #include <cstring>
 #include <fstream>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 #include "State.hpp"
 #include "Virus.hpp"

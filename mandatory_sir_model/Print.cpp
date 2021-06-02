@@ -1,7 +1,5 @@
 #include "Print.hpp"
 
-#include <iostream>
-
 void print(std::vector<State> const& result) {
   int day = 1;
   for (auto& state : result) {

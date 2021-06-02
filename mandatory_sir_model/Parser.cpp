@@ -9,38 +9,38 @@ Command::Command(lyra::cli& cli) {
           .add_argument(lyra::opt(beta, "beta")
                             .name("-b")
                             .name("--beta")
-			    .required()
+                            .required()
                             .help("Set the beta value"))
           .add_argument(lyra::opt(gamma, "gamma")
                             .name("-g")
                             .name("--gamma")
-			    .required()
+                            .required()
                             .help("Set the gamma value"))
           .add_argument(lyra::opt(S, "susceptibles")
                             .name("-S")
                             .name("--susceptibles")
-			    .required()
+                            .required()
                             .help("Set the number of susceptibles at the start "
                                   "of the pandemic"))
           .add_argument(lyra::opt(I, "infected")
                             .name("-I")
                             .name("--infected")
-			    .required()
+                            .required()
                             .help("Set the number of infected at the start of "
                                   "the pandemic"))
           .add_argument(
               lyra::opt(R, "removed")
                   .name("-R")
                   .name("--removed")
-		  .required()
+                  .required()
                   .help(
                       "Set the number of removed at the start of the pandemic"))
           .add_argument(
               lyra::opt(duration, "duration")
                   .name("-d")
                   .name("--duration")
-		  .choices([](int value) {return value > 0;})
-		  .required()
+                  .choices([](int value) { return value > 0; })
+                  .required()
                   .help("Set the duration (days) of the simulation")));
   cli.add_argument(
       lyra::command(
@@ -50,14 +50,14 @@ Command::Command(lyra::cli& cli) {
           .add_argument(lyra::opt(precision, "precision")
                             .name("-p")
                             .name("--precision")
-                            .choices(0.1, 0.01, 0.001)
+                            .choices(0.01, 0.001)
                             .help("Set the decimal precision of the estimate "
                                   "of the parameters"))
           .add_argument(
               lyra::opt(file_name, "data file")
                   .name("-f")
                   .name("--file")
-		  .required()
+                  .required()
                   .help("Select the file containing the data to fit")));
 }
 void Command::sir_command(lyra::group const& group) {

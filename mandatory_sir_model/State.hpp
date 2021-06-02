@@ -10,7 +10,7 @@ struct State {
     if (S < 0. || I < 0. || R < 0.)
       throw std::range_error("S, I, R must be positive values\n");
     if (S == 0. && I == 0. && R == 0.)
-	    throw std::range_error("At least one value must be != 0.");
+      throw std::range_error("At least one value must be != 0.\n");
   }
   double N = S + I + R;
   double i_sigma = std::sqrt(I * (N - I) / N);

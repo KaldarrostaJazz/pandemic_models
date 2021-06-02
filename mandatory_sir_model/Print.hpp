@@ -1,6 +1,7 @@
 #ifndef PRINT_HPP
 #define PRINT_HPP
 #include <fstream>
+#include <iostream>
 
 #include "Pandemy.hpp"
 

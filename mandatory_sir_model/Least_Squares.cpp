@@ -1,13 +1,5 @@
 #include "Least_Squares.hpp"
 
-#include <algorithm>
-#include <cassert>
-#include <cmath>
-#include <iostream>
-#include <numeric>
-
-#include "Pandemy.hpp"
-
 double Chi_Square(std::vector<State> const& data_values,
                   std::vector<State> const& theoretical_values) {
   int stop = std::min(data_values.size(), theoretical_values.size());
