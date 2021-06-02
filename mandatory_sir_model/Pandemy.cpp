@@ -1,15 +1,10 @@
 #include "Pandemy.hpp"
 
-#include <cassert>
-#include <cmath>
-#include <cstring>
-#include <fstream>
-#include <stdexcept>
 std::vector<State> Pandemy::progression(int const duration) const {
   std::vector<State> result{state};
   double const beta = virus.beta;
   double const gamma = virus.gamma;
-  int const people = state.S + state.I + state.R;
+  int const people = state.N;
   for (int day = 1; day != duration; ++day) {
     auto const last = result.back();
     State current{last.S - (beta / people) * last.S * last.I,
@@ -30,7 +25,10 @@ std::vector<State> Pandemy::progression(int const duration) const {
 }
 std::vector<State> Pandemy::get_data(std::string const& file) {
   std::vector<State> pandemic_data{};
-  double day, S, I, R;
+  double day;
+  double S;
+  double I;
+  double R;
   std::ifstream data_file{file};
   if (!data_file) {
     throw std::runtime_error(
