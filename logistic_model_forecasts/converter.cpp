@@ -11,7 +11,7 @@ int main(int argc, const char** argv) {
     bool show_help = false;
     auto cli =
         lyra::help(show_help) |
-        lyra::opt(file_name, "file to read")["-i"]["-input"].required() |
+        lyra::opt(file_name, "file to read")["-i"]["--input"].required() |
         lyra::opt(output_name, "file to write")["-o"]["--output"].required() |
         lyra::opt(N, "number of days")["-d"]["--days"].choices(
             [](int value) { return value >= 0; });
