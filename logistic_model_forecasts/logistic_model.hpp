@@ -12,7 +12,9 @@ class Logistic {
  public:
   Logistic(std::array<double, 3>& parameters)
       : K{parameters[0]}, A{parameters[1]}, r{parameters[2]} {}
-  double K, A, r;
+  double K;
+  double A;
+  double r;
   double cases_t(int t);
   double dcases_t(int t);
   std::array<double, 3> cases_grad(int t_end);
@@ -36,7 +38,8 @@ class Fit {
       throw std::range_error(
           "Invalid value for (m, k). Valid values: k > 2 * m > 0.\n");
   }
-  double m, k;
+  double m;
+  double k;
   double alpha;
   std::string file_name;
   Acquisition pandemy{file_name};

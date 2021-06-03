@@ -34,7 +34,8 @@ std::vector<int> Acquisition::Data() {
   std::ifstream data_file{file_name};
   if (!data_file) throw std::runtime_error("Select a valid path");
   while (data_file.good()) {
-    int t, cases;
+    int t;
+    int cases;
     data_file >> t >> cases;
     Data.push_back(cases);
   }
@@ -45,7 +46,8 @@ std::vector<int> Acquisition::dData() {
   std::ifstream data_file{file_name};
   if (!data_file) throw std::runtime_error("Select a valid path");
   while (data_file.good()) {
-    int t, cases;
+    int t;
+    int cases;
     data_file >> t >> cases;
     dData.push_back(cases);
   }
