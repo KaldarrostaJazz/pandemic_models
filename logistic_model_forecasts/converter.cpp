@@ -43,6 +43,7 @@ int main(int argc, const char** argv) {
     } else {
       while (input.good()) {
         // predisposed for |day|S|I|R| format
+        int day = 1;
         int time;
         int value_1;
         int value_2;  // infected
@@ -51,6 +52,7 @@ int main(int argc, const char** argv) {
         // excetera...
         input >> time >> value_1 >> value_2 >> value_3;  // >> value_4 ...
         output << day << " " << value_2 << '\n';
+        ++day;
       }
     }
     input.close();
