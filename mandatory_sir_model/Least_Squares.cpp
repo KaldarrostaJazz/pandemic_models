@@ -1,7 +1,7 @@
 #include "Least_Squares.hpp"
 
-double Chi_Square(std::vector<State> const& data_values,
-                  std::vector<State> const& theoretical_values) {
+double Least_Squares::Chi_Square(std::vector<State> const& data_values,
+                                 std::vector<State> const& theoretical_values) {
   int stop = std::min(data_values.size(), theoretical_values.size());
   double Chi_Square = 0.;
   for (int day = 0; day != stop; ++day) {
@@ -12,8 +12,7 @@ double Chi_Square(std::vector<State> const& data_values,
   assert(Chi_Square >= 0.);
   return Chi_Square;
 }
-Virus get_parameters(std::vector<State> const& pandemic_data,
-                     double precision) {
+Virus Least_Squares::get_parameters(double precision) {
   std::vector<double> chi_squares{};
   for (double beta = 0.0; beta < 1.0; beta += precision) {
     for (double gamma = 0.0; gamma < 1.0; gamma += precision) {

@@ -64,7 +64,7 @@ void Command::sir_command(lyra::group const& group) {
   if (show_help)
     std::cerr << group;
   else {
-    std::cout << "RUNNING SIR SIMULATION MODE\n";
+    std::cout << "RUNNING THE SIR SIMULATION MODE\n";
     State initial_state{S, I, R};
     Virus virus{beta, gamma};
     Pandemy pandemy{initial_state, virus};
@@ -80,7 +80,8 @@ void Command::fit_command(const lyra::group& group) {
     std::cout << "RUNNING THE FITTING MODE\n";
     Pandemy pandemy;
     auto const pandemic_data = pandemy.get_data(file_name);
-    auto const virus = get_parameters(pandemic_data, precision);
+    Least_Squares fitting{pandemic_data};
+    auto const virus = fitting.get_parameters(precision);
     std::cout << "Estimated parameters:\n"
               << virus.beta << " " << virus.gamma << '\n';
   }
