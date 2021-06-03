@@ -42,8 +42,4 @@ TEST_CASE("TEST FIT CLASS METHODS N. 2") {
   Fit fitting{14, 35, 0.0005, file_name};
   double variance = fitting.variance(disease);
   CHECK(variance == doctest::Approx(867749));
-  std::array<double, 3> result = fitting.steepest_descent({0.1, 0.001, 1.e-9});
-  CHECK(result[0] == doctest::Approx(88418.2));
-  CHECK(result[1] == doctest::Approx(213.217));
-  CHECK(result[2] == doctest::Approx(0.203533));
 }
