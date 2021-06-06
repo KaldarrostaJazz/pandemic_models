@@ -23,6 +23,7 @@ std::vector<State> Pandemy::progression(int const duration) const {
   }
   return result;
 }
+
 std::vector<State> Pandemy::get_data(std::string const& file) {
   std::vector<State> pandemic_data{};
   double day;

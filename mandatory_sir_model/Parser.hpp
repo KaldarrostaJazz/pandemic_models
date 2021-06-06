@@ -17,7 +17,9 @@ struct Command {
   double precision = 0.01;
   std::string file_name;
   bool show_help = false;
+
   Command(lyra::cli& cli);
+
   void sir_command(lyra::group const& group);
   void fit_command(const lyra::group& group);
 };

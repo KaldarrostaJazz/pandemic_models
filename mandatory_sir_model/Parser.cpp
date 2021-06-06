@@ -60,6 +60,7 @@ Command::Command(lyra::cli& cli) {
                   .required()
                   .help("Select the file containing the data to fit")));
 }
+
 void Command::sir_command(lyra::group const& group) {
   if (show_help)
     std::cerr << group;
@@ -73,6 +74,7 @@ void Command::sir_command(lyra::group const& group) {
     print_simple(states);
   }
 }
+
 void Command::fit_command(const lyra::group& group) {
   if (show_help)
     std::cerr << group;
