@@ -1,0 +1,25 @@
+\begin{abstract}
+
+Within this project we implement a program that uses the SIR model to simulate the outbreak of a pandemy. The program can olso operate backwards and estimate the SIR parameters of a given set of data by using the least squares method.
+
+As variations on the theme we implement a forecasting program based on the logistic model, as well as a real-time graphic simulation of the spreading of a flu among a closed group of people.
+
+All  the code is written in C++.
+
+External libraries needed to properly run the program (some of them must be installed onto the user's computer):
+\begin{itemize}
+\item \href{https://www.bfgroup.xyz/Lyra/}{Lyra};
+\item \href{https://www.sfml-dev.org/}{SFML};
+\item \href{https://en.wikipedia.org/wiki/Doctest}{Doctest};
+\item \href{https://cmake.org/}{CMake (optional)};
+\end{itemize}
+
+The work is divided among three directories:
+\begin{description}
+\item[mandatory\_SIR\_model] It contains the headers and source code of the main program.
+\item[logistic\_model] It contains the headers and the source code of the logistic model program.
+\item[graphic\_simulation] It contains the headers and the source code of the graphic simulation program.
+\end{description}
+
+More about the SIR model at \cite{wikipedia : SIR}, \cite{Gaeta : Modelli matematici}, \cite{Exactly solvable SIR}.
+\end{abstract}
