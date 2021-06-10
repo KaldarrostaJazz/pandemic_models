@@ -52,7 +52,7 @@ Command::Command(lyra::cli& cli) {
                             .name("--precision")
                             .choices(0.01, 0.001)
                             .help("Set the decimal precision of the estimate "
-                                  "of the parameters"))
+                                  "of the parameters (only 0.01 and 0.001)"))
           .add_argument(
               lyra::opt(file_name, "data file")
                   .name("-f")
