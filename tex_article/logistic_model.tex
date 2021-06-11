@@ -1,13 +1,132 @@
 \section{Logistic model}
 
+As for the previous program, the code is spread over many translation units, with classes defined in headers and methods and free functions declared in headers and defined in the source code. The file \verb!logistic_test.cpp! contains tests source code while \verb!root_logistic.C! is a root macro which can help to graphically visualize the program output. \verb!converter.cpp! is a small program to help converting data into the correct format. \verb!class_acquisition_data_test! is a file containing the data used to run the tests, this data have been taken from the \href{https://github.com/pcm-dpc/COVID-19}{Protezione Civile Italiana} github page, they are the data of the first 40 recorded days of COVID-19 pandemic in Italy (form March 1st 2020 to April 10th 2020).
+
+To compile the program is suggested the use of CMake:
+\begin{verbatim}
+$ cmake -S . -B build/
+$ make logistic_model    # the program executable
+$ make logistic_test.t # the tests executable
+$ make converter # the data converter
+\end{verbatim}
+otherwise you can use your favourite compiler. For example:
+\begin{verbatim}
+# to generate the program executable
+$ g++ logistic_model.cpp main.cpp -o sir_model
+# to generate the tests executable
+$ g++ logistic_model.cpp logistic_test.cpp -o sir_model.t
+# to generate the data converter executable
+$ g++ converter.cpp -o converter
+\end{verbatim}
+Using CMake will compile with \verb!-Wall -Wextra -fsanitize=address! options enabled.
+
 \subsection{Purpose}
+
+The program has the aim of overcoming the limits of the SIR fitting model previously explained.
+
+As studied by M. Batista in \cite{Batista : Logistic}, the logistic model can be applied to the start of a pandemic to make forecastings on the maximum outbreak of the disease.
+
+This program implements the logistic model following Batista's directives and fits a set of data returning the parameters of the corresponding logistic curve. The curve parameters are connected to some charateristics of the pandemic. In particular:
+\begin{itemize}
+\item The $K$ factor is the maximum number of infected that will be reached during the pandemic.
+\item The $A$ factor is linked with the initial number of infected at time 0 by the relation $I(0) = \frac{k}{1+A}$.
+\item The $r$ factor is the transmission rate. It is related with the $R(t)$ of the pandemic: $R(t)=\frac{1+Ae^{-rt}}{1+Ae^{-r(t+1)}}$.
+\end{itemize} 
+
+To estimate the values and minimize the variance  it is used the steepest descent method \cite{wikipedia : steepest}, and so an initial guess must be made (as Batista explains in his work). The user MUST NOT make the guess, but instead has to choose two points of the data (the k-th and the m-th) which will be used by the program to make the initial guess. The two points must be choosen in a way that, if N are the days of pandemic recoreded in the data $k \approx N$ and $m \approx k/2$.
+
+On standard output the program prints some information about the fit: 
+\begin{itemize}
+\item  the initial guess (if found);
+\item the estimated parameters;
+\item the variance;
+\item the day with the maximum number of daily cases;
+\end{itemize}
+If asked, the program can olso make a forecast for a specific day after N.
+
+More about the logistic model applied to the growth of a population at \cite{Gaeta : Modelli matematici}, \cite{wikipedia : logistic}.
 
 \subsection{Running the program}
 
+To know how to run the program enter the help command
+\begin{verbatim}
+# logistic_model help
+$ ./logistic_model --help
+# coverter help
+$ ./converter --help
+\end{verbatim}
+if the \verb!-d <value>! option has been enabled the program will make a forecast for the <value>th day and will create a \verb!.dat! file with the day-by-day count of the cases. It is possible then to load the root macro \verb!root_logistic.C! and  graphically visualize the prevision of the model:
+\begin{verbatim}
+$ ./build/logistic_model -d 45 -m 14 -k 37 -a 0.0005 -f matteo_l.dat
+An initial guess was found:
+K(0) = 155.031 A(0) = 118.131 r(0) = 0.152266
+The series converged after 129 iterations
+Estimated parameters:
+K = 163.733| A = 118.073| r = 0.152267
+Estimated infected at t = 0: 1.37506
+The maximum daily cases day was day 31.3352 from the data day one
+Variance = 72.4682
+Total cases expected at day 45 from the first day of the data = 145.561
+$ root
+   ------------------------------------------------------------------
+  | Welcome to ROOT 6.22/00                        https://root.cern |
+  | (c) 1995-2020, The ROOT Team; conception: R. Brun, F. Rademakers |
+  | Built for linuxx8664gcc on Jun 14 2020, 15:54:05                 |
+  | From tags/v6-22-00@v6-22-00                                      |
+  | Try '.help', '.demo', '.license', '.credits', '.quit'/'.q'       |
+   ------------------------------------------------------------------
+
+root [0] .L root_logistic.C
+root [1] print_fit("matteo_l.dat")
+Info in <TCanvas::Print>: pdf file canva.pdf has been created
+\end{verbatim}
+
 \subsection{The classes and their methods}
+
+The data converter program is very simple and its code is entirely in \verb!converter.cpp!. It reads the choosen file and creates a new one with the data formatted in the proper way. The file to read and the one to write must be given as command-line arguments. It is also possible to convert only a part of the data, by using the option  \verb!-d <value>!. For example to convert only the first 35 days: \verb!-d 35!. To open and interact with the files it has been used the \verb!fstream! library, while to parse the command line Lyra. The program is already configured to covert data formatted in the \verb!day S I R! form, as the one printed by the sir model simulators. It is possible to modify this if needed (e.g. to read a file which shows only the number of infected and removed).
+
+The implementation of the logistic model is made up by only three classes.
+\begin{description}
+\item[Logistic] The class that implements the logistic model and computes the number of cases at a time t. The constructor takes as argument an \verb!std::array! of three doubles, each of them corresponding to a parameter of the curve. \verb!cases_t! and \verb!dcases_t! do pretty much the same job, one calculates the number of total infected at t, the other calculates the daily number of infected at t. The method \verb!cases_grad! computes the gradient of the logistic function and is used by the steepest descent algorithm. \verb!log! creates a \verb!.dat! file containing the day-by-day count of both the total infected and the daily infected.
+\item[Acquisition] It handles the acquisition of data from external files.The file must be given to the program already formatted by using the converter. The name of the methods are self-explanatory: \verb!Data! returns the total-cases vector, \verb!dData! returns the vector of the daily cases.
+\item[Fit] The main dish of the code. The \emph{Fit} class does the hard job of estimating the parameters. To initialize a \emph{Fit} object must be given as arguments:
+\begin{itemize}
+\item the $m$ data index;
+\item the $k$ data index;
+\item the convergence factor $\alpha$ (indicated in the code with the letter \emph{a});
+\item the name of the file to fit;
+\end{itemize}
+The major mathods of the class are:
+\begin{description}
+\item[initial\_guess] which returns the initial guess for the $K, A, r$ parameters using the m-th value and the k-th value of the data;
+\item[steepest\_descent] which takes as argument the initial guess and returns the estimates of the parameters after running the steepest descent algorithm (from now on SD).
+\end{description}
+The \verb!steepest_descent! function needs another argument to work, which is the \emph{delta} vector (in the code it is an \verb!std::array!). This vector contains the quantity by which the parameters are modified (in positive or in negative) after every iteration.
+
+The other methods of the class concurr to the SD algorithm: 
+\begin{itemize}
+\item variance computes the variance between the data and the predicted values;
+\item std\_dev computes the standard deviation between the data and the predicted values;
+\item var\_grad is the function that calculates the gradient of the variance;
+\end{itemize}
+\end{description}
+
+The parsing of the command line is done by Lyra and the code is in the \verb!main.cpp! and doesn't do any checks on the correctness of the values, which instead are inspected in the \emph{Fit} constructor and in the functions. 
+
+The \emph{delta} vector is initialized in \verb!main.cpp! as an \verb!std::array!. 
+
+To store the values of the three parameters $K, A, r$ it has been used an \verb!std::array! object instead of a struct because a struct wasn't necessary. The maximum number of iteration to search for the parameters is 10000 and it is initialized as a global variable.
 
 \subsection{Limits of the program}
 
+Although the logistic model gets over the biggest problem of the SIR model fitting, it is not exempt from having limitations - it still is an idealization.
 
+The biggest restriction is the incapability of predicting the entire course of the pandemic. Since the logistic function converges to a maximum, the logistic model can make forecastings and fitting only in the first part of the pandemic, when the contagions are still growing. So it is impossible to predict the dedflation of the disease or the rate at which the infections will decrease.
 
+Moreover, the logistic model is very precise and reliable on short-term forecasts (max 5 days after the last day of the data), but tends to be more inaccurate when asked to make prediction further predictions.
 
+Another heavy limitation is the importance of the initial guess. Choosing wrong $m$ and $k$ values can lead to very bad fittings, with a big variance. There are algorithms that bypass this problem, but they need lot of computing power to make estimates in a decent time. However there is a WOP to implement also those algorithms.
+
+It is a metter of costs and benefits: not to need the absolute knowledge of the state of the entire population, or to make prediction for the deflating part of the pandemic.
+
+We have fitted Italy and China data of the early stage COVID-19 pandemic and we are pride to say that the program does a very good job. In the \verb!files! directory you can find those fittings. The forecasted values where in agreement with the real values in the range of the error (the square root of the variance).

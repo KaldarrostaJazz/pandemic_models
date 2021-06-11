@@ -1,10 +1,9 @@
 \section{Mandatory SIR model}
+\label{section : mandatory}
 
 The code is spread over many translation units.
 
-Classes are defined in headers, methods and free functions are declared in headers and defined in the source 
-code. The file \verb!pandemy.test.cpp! contains tests source code while \verb!root_pandemy.C! is a root macro 
-which can help to graphically visualize the program output.
+Classes are defined in headers, methods and free functions are declared in headers and defined in the source code. The file \verb!pandemy.test.cpp! contains tests source code while \verb!root_pandemy.C! is a root macro which can help to graphically visualize the program output.
 
 To compile the program is suggested the use of CMake:
 \begin{verbatim}
@@ -27,26 +26,21 @@ Using CMake will compile with \verb!-Wall -Wextra -fsanitize=address! options en
 
 There are two modes the program can work in: the sir simulation mode and the fitting mode.
 
-While running in the sir simulation mode, given the initial state of a population (number of susceptibles, 
-infected and removed) and the parameters of the pandemic (beta and gamma values), the program simulates the 
-developing of the epidemy by numerically resolving a system of three ODEs and prints on standard output the 
-day-by-day count of susceptibles, infected and removed from day 1 until the day choosen by the user.
+While running in the sir simulation mode, given the initial state of a population (number of susceptibles, infected and removed) and the parameters of the pandemic (beta and gamma values), the program simulates the developing of the epidemy by numerically resolving a system of three ODEs and prints on standard output the day-by-day count of susceptibles, infected and removed from day 1 until the day choosen by the user.
 
-While running in the fitting mode, given a file containing the day-by-day count of susceptibles, infected and 
-removed, the program estimates the parameters of file pandemic by means of the least squares method and prints 
-them on standard output.
+While running in the fitting mode, given a file containing the day-by-day count of susceptibles, infected and removed, the program estimates the parameters of file pandemic by means of the least squares method \cite{Fornasini : Uncertainty} and prints them on standard output. Data must be provided in the format \verb!day S I R!, with blank spaces separating the values.
+
+In the directory \verb!files! of this archive there are some pdfs  of some fitting made during the debugging and the tesitng.
 
 \subsection{Running the program}
 
-First you must choose whether to run the sir simulation mode or to run the fitting mode. The two choices are 
-mutually exclusives. If no choice is made, the program will do nothing.
+First you must choose whether to run the sir simulation mode or to run the fitting mode. The two choices are mutually exclusives. If no choice is made, the program will do nothing.
 \begin{verbatim}
 $ ./sir_model sir # runs the sir simulation mode
 $ ./sir_model fit #runs the fitting mode
 $ ./sir_model.t #executes tests
 \end{verbatim}
-The other options (such as the initial state of the population or the file containing the data to fit) are 
-entered from command line by using the specific token.
+The other options (such as the initial state of the population or the file containing the data to fit) are entered from command line by using the specific token.
 
 For more detailed instructions use the help command:
 \begin{verbatim}
@@ -55,8 +49,7 @@ $ ./sir_model sir --help # sir simulation mode help
 $ ./sir_model fit --help # fitting mode help
 \end{verbatim}
 
-If gnuplot is installed, it is possible to use it to graphically visualize the program output. Alternatively, if 
-ROOT is installed, it is possible to load the macro and execute it.
+If gnuplot is installed, it is possible to use it to graphically visualize the program output. Alternatively, if ROOT is installed, it is possible to load the macro and execute it.
 \begin{verbatim}
 $ ./sir_model sir -b 0.8 -g 0.3 -S 900 -I 100 -R 0 -d 30 > dati.dat
 $ gnuplot
@@ -94,57 +87,52 @@ root [1] pandemy("dati.dat")
 
 The main classes of the program are:
 \begin{description}
-\item[Pandemy] The class core of the program. It contains all the data of the pandemic to simulate (the state 
-and the parameters). An object of type \emph{Pandemy} it's initialized by giving it as arguments a \emph{State} 
-object and a \emph{Virus} object (see below).
+\item[Pandemy] The class core of the program. It contains all the data of the pandemic to simulate (the state and the parameters). An object of type \emph{Pandemy} it's initialized by giving it as arguments a \emph{State} object and a \emph{Virus} object (see below).
 
 Methods of the class:
 \begin{description}
-\item[progression] It takes as argument the duration in days of the simulation and returns a vector containing 
-the day-by-day count of susceptibles, infected and removed.
-\item[get\_data] It takes as argument the name of the file containing the data to fit with the fitting mode and 
-returns a vector containing the data acquired.
-\item[get\_state \and get\_virus] They respectively return the \emph{State} and the \emph{Virus} objects 
-\emph{Pandemy} has been initialized with. This methods are not used in the main program, they are needed only 
-for testing.
+\item[progression] It takes as argument the duration in days of the simulation and returns a vector containing the day-by-day count of susceptibles, infected and removed.
+\item[get\_data] It takes as argument the name of the file containing the data to fit with the fitting mode and returns a vector containing the data acquired.
+\item[get\_state \and get\_virus] They respectively return the \emph{State} and the \emph{Virus} objects \emph{Pandemy} has been initialized with. This methods are not used in the main program, they are needed only for testing.
 \end{description}
 
-\item[Least\_Squares] The class that deals with the fitting part. By taking as argument of initialization a 
-vector containing the data to fit, its member functions implement the least squares method (from now on LSM) and 
-the compute of the chi square.
+\item[Least\_Squares] The class that deals with the fitting part. By taking as argument of initialization a vector containing the data to fit, its member functions implement the least squares method (from now on LSM) and the compute of the chi square.
 
 Methods of the class:
 \begin{description}
 \item[Chi\_Square] It returns the chi square of set of data relatively to a theoretical prevision.
-\item[get\_parameters] After appyling the LSM, it returns a \emph{Virus} object initialized with the estimated 
-parameters of the data fitted. The decimal precision of the fitting is given as argument of the method.
+\item[get\_parameters] After appyling the LSM, it returns a \emph{Virus} object initialized with the estimated parameters of the data fitted. The decimal precision of the fitting is given as argument of the method.
 \end{description}
 
 \end{description}
 
 Minor data structures - but not less important - are:
 \begin{description}
-\item[State] A simple struct to store all the information of the state of the population, such as the number of 
-people belonging to each compartment. \verb!i_sigma! is a value used to compute the chi square and represents 
-the uncertainty associated with the number of infected.
-\item[Virus] Same a the \emph{State} struct, it contains the information of the disease causing the pandemic, 
-that are the transmission rate ($\beta$ value) and the inverse of the infection period ($\gamma$ value).
-\item[Parser]
+\item[State] A simple struct to store all the information of the state of the population, such as the number of people belonging to each compartment. \verb!i_sigma! is a value used to compute the chi square and represents the uncertainty associated with the number of infected. 
+\item[Virus] Same as the \emph{State} struct, it contains the information of the disease causing the pandemic, that are the transmission rate ($\beta$ value) and the inverse of the infection  period ($\gamma$ value).
+\item[Parser] Struct that handles the parsing of the command line. To this scope, it has been used \href{https://www.bfgroup.xyz/Lyra/}{Lyra}. The parser checks the correctness of the input format. No checks are made on the input values, except for the duration of the simulation and the decimal precision of the fit. All the other value checks are performed inside their specific class constructor.
 \end{description}
 
-For both the \emph{State} and \emph{Virus} struct is defined the \verb!operator==!, which turns useful for 
-testing purposes.
+For both the \emph{State} and \emph{Virus} struct is defined the \verb!operator==!, which turns to be useful for testing purposes.
 
-Not all the code is gathered in data structures and classes, there are some free functions too. The choice not 
-to define another class is due to their marginal role in the program. They are not related, in fact, with the 
-SIR model nor with the LSM. Those free functions are:
+Not all the code is gathered in data structures and classes, there are some free functions too. The choice not to define another class is due to their marginal role in the program. They are not related, in fact, with the SIR model nor with the LSM. Those free functions are:
 \begin{description}
-\item[copy\_round] A simple but effective function to round the memeber of a \emph{State} object. It is used 
-when printing the output of the progression method.
-\item[print] A function that prints on standard output a table with the day-by-day count of susceptibles, 
-infected and removed. It is disabled.
-\item[print\_simple] A function that prints on standard output
+\item[copy\_round] A simple but effective function to round the members of a \emph{State} object. It is used when printing the output of the progression method.
+\item[print] A function that prints on standard output a table with the day-by-day count of susceptibles, infected and removed. It is disabled.
+\item[print\_simple] A function that prints on standard output the row day-by-day count of susceptibles, infected and removed. The print format is \verb!day S I R!. The datavalue separator is a blank space, but it can be substituted with a comma to print in csv format.
 \end{description}
 
 \subsection{Limits of the program}
+
+The assignment of this project provides that both the transmission parameters $\beta$ and $\gamma$ must be  between zero and one.
+
+This puts a very heavy limit on the forecasting capability of the program. The beta factor is defined as the inverse of the time interval between two contacts, which means it represents the number of conctacts per unit of time. Taking as unit an interval of 1 day, imposing $\beta \in [0; 1]$, prevents the program to simulate the outbreak of pandemic with more than 1 encounter/day, or to fit data with a ratio $I(t+1)/I(t)$ greater than 2 (which is most of the real cases).
+
+Another limit to the fitting power of the program lies in the SIR model itself. The amount of people passing from one compartment to another are deeply linked to each other and to the number of people in the compartments. For example, the number of new cases  at a time t, is detemined by how many susceptibles and infected there are and by how many people are passing in the removed group at t.
+
+This isn't much of a problem when simulating an epidemic or when fitting  data that contains information on all the poopulation. But in most of the real cases, it is known only the number of infected and removed, because those are the only mesurable. So a guess on the total size of the population  must be made by the user, resulting in an inaccurate fit.
+
+More limitations are due to the constant value of beta and the assumption that the number of all the infected is known at every time t, which does not reflect reality. However considering also this particual cases is far beyond the goal of the program.
+
+You can find more data and more fitting at  \href{https://github.com/KaldarrostaJazz/pandemic_models}{KaldarrostaJazz}, which will be  kept updated to implement more models.
 
