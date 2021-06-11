@@ -1,4 +1,4 @@
-#Data from Chowell, G., et al. "Transmission dynamics of the great influenza pandemic of 1918 in Geneva, Switzerland: Assessing the effects of hypothetical interventions." Journal of theoretical biology 241.2 (2006): 193-204.
+Data from Chowell, G., et al. "Transmission dynamics of the great influenza pandemic of 1918 in Geneva, Switzerland: Assessing the effects of hypothetical interventions." Journal of theoretical biology 241.2 (2006): 193-204.
 bin,month,day,year,num
 1,07,01,1918,16
 2,07,02,1918,10
