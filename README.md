@@ -4,6 +4,7 @@ model and the logistic model, which I implement as argument of the exam, are two
 more. I plan to keep updated this project and to implement more model, or to refine the ones I have already 
 implemented by gathering more data and analyzing them. Pleasae feel free to copy, fork and improve this 
 directory.
+--------------------------------------------------------------------------------------------------------
 ## The sir model.
 The SIR model is a mathematical model used in statistics to study the evolution and spread of diseases. It is a 
 compartimental and deterministic model, which divides the population into three categories: susceptibles (those 
