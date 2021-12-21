@@ -28,7 +28,7 @@ Double_t double_gaussian(Double_t* x, Double_t* par) {
 }
 void italy() {
   gROOT->SetStyle("Modern");
-  gStyle->SetOptFit(111);
+  gStyle->SetOptFit(0);
   gStyle->SetOptStat(0);
   //TF1* logi = new TF1("logi", logistic, 620., 700., 3);
   //logi->SetLineColor(kBlue);
@@ -61,12 +61,7 @@ void italy() {
   //graph->Fit("d_gaus");
   //cout << "\nGaussian fit:\n";
   //graph->Fit("gaus");
-  //TLegend* leg = new TLegend(0.6, 0.75, 0.9, 0.9);
-  //leg->SetFillColor(0);
-  //leg->AddEntry(graph, "Dati");
-  //leg->AddEntry(logi, "Fit logistico");
-  //leg->AddEntry(gomp, "Fit gompertz");
-  //leg->AddEntry(logi_gomp, "Fit logistico + gompertz");
+  
   TF1* gauss = new TF1("gauss", "gaus", 620, 700);
   gauss->SetLineColor(kRed);
   gauss->SetLineStyle(kDotted);
@@ -78,6 +73,15 @@ void italy() {
   TF1* func = graph->GetFunction("expo");
   func->SetRange(620, 700);
   func->SetLineColor(kRed);
+
+  TLegend* leg = new TLegend(0.1, 0.75, 0.4, 0.9);
+  leg->SetFillColor(0);
+  leg->AddEntry(graph, "Dati");
+  leg->AddEntry(func, "Fit expo");
+  leg->AddEntry(gauss, "Fit gauss");
+  //leg->AddEntry(logi, "Fit logistico");
+  //leg->AddEntry(gomp, "Fit gompertz");
+  //leg->AddEntry(logi_gomp, "Fit logistico + gompertz");
   TCanvas* canva = new TCanvas("Fit", "Fit");
   canva->SetGrid();
   graph->Draw("AP");
@@ -87,6 +91,6 @@ void italy() {
   //logi->Draw("SAME");
   //gomp->Draw("SAME");
   //logi_gomp->Draw("SAME");
-  //leg->Draw("SAME");
+  leg->Draw("SAME");
   canva->Print("Fit_Italia_4_11_2021_20_12_2021.pdf");
 }
