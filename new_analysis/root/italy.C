@@ -92,5 +92,5 @@ void italy() {
   //gomp->Draw("SAME");
   //logi_gomp->Draw("SAME");
   leg->Draw("SAME");
-  canva->Print("Fit_Italia_4_11_2021_20_12_2021.pdf");
+  canva->Print("Fit_Italia_4_11_2021_27_12_2021.pdf");
 }
