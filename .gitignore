@@ -5,3 +5,4 @@ mandatory_sir_model/data_converter.cpp
 logistic_model_forecasts/doctest.h
 logistic_model_forecasts/build
 logistic_model_forecasts/logistic_pred.dat
+.vscode
